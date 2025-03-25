@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | Skill Sahyog</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/message.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Settings</a></li>
+                <li>
+                    <a href="#">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="message-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="#">Manage Skills</a></li>
+                <li><a href="#">Browse Skills</a></li>
+                <li><a href="#">Skill Matching</a></li>
+                <li><a href="#">Exchange Requests</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </aside>
+        
+        <section class="chat-section">
+            <div class="chat-list">
+                <h3>Messages</h3>
+                <ul>
+                    {% if chat_access and chat_access.exchange %}
+                        <li class="chat-item" data-exchange-id="{{ chat_access.exchange.id }}">
+                            {{ chat_access.user1.username }} & {{ chat_access.user2.username }}
+                        </li>
+                    {% else %}
+                        <p>No active chat available.</p>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="chat-window">
+                {% if active_chat %}
+                    <div class="chat-header">
+                        <h3>Chat between {{ chat_access.user1.username }} and {{ chat_access.user2.username }}</h3>
+                        <p><b>Exchange Status:</b> {{ active_chat.exchange.status }}</p>
+                        <p><b>Skill Exchange:</b> 
+                            {{ active_chat.user1.username }} ({{ active_chat.exchange.sender_skill.skill_name }}) ↔ 
+                            {{ active_chat.user2.username }} ({{ active_chat.exchange.receiver_skill.skill_name }})
+                        </p>
+                    </div>
+
+                    <div id="chatBox" class="chat-messages">
+                    </div>
+
+                    <div class="chat-input">
+                        <form id="chatForm">
+                            {% csrf_token %}
+                            <input type="text" id="messageInput" name="message_content" placeholder="Type a message..." required>
+                            <button type="submit" id="sendButton">Send</button>
+                        </form>
+                    </div>
+
+                    {% if active_chat.exchange.status|lower == "accepted" %}
+                    <div class="exchange-actions">
+                        <form method="POST" action="#">
+                            {% csrf_token %}
+                            <button type="submit" class="complete-btn">Complete Exchange</button>
+                        </form>
+                        <form method="POST" action="#">
+                            {% csrf_token %}
+                            <button type="submit" class="reject-btn">Reject Exchange</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <p>No active chat selected.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const chat_id = "{{ chat_id }}";
+        let lastMessageId = 0;
+    
+        function getCSRFToken() {
+            let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+            return csrfToken ? csrfToken.value : "";
+        }
+
+        let lastRenderedDate = null; // To track the last displayed date
+
+        function renderMessage(msg) {
+            const chatBox = document.getElementById("chatBox");
+        
+            // ✅ Prevent duplicate messages
+            if (document.querySelector(`[data-message-id="${msg.id}"]`)) {
+                return; // Exit if message is already in chatBox
+            }
+        
+            const messageDiv = document.createElement("div");
+            messageDiv.dataset.messageId = msg.id;
+            messageDiv.className = msg.sender_username === "{{ request.user.username|escapejs }}" ? 'message sent' : 'message received';
+        
+            // Convert UTC timestamp to IST (UTC+5:30)
+            let timestamp = new Date(msg.timestamp);
+            timestamp.setMinutes(timestamp.getMinutes() + 330); // Add 5 hours 30 minutes
+        
+            let messageDate = timestamp.toISOString().split("T")[0]; // Extract YYYY-MM-DD
+            let timeFormatted = timestamp.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        
+            // ✅ Insert a date header if the date has changed
+            if (lastRenderedDate !== messageDate) {
+                const dateHeader = document.createElement("div");
+                dateHeader.className = "date-header";
+                dateHeader.innerText = timestamp.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+                chatBox.appendChild(dateHeader);
+                lastRenderedDate = messageDate; // Update last rendered date
+            }
+        
+            messageDiv.innerHTML = `<b>${msg.sender_username}:</b> ${msg.content} <small>${timeFormatted} IST</small>`;
+            chatBox.appendChild(messageDiv);
+        
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+
+        let firstFetch = true; // Tracking if it's the first fetch
+        const chatBox = document.getElementById("chatBox");
+        // Showing the loading indicator
+        chatBox.innerHTML = `<div id="loadingIndicator" class="loading">Loading the chat...</div>`;
+
+        function fetchMessages() {
+            fetch(`/api/messages/${chat_id}/?last_message_id=${lastMessageId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log("Fetched messages:", data.messages); // Debugging API response
+        
+                if (firstFetch) {
+                    chatBox.innerHTML = ""; // Remove loading text only on the first fetch
+                    firstFetch = false; // Prevent clearing on subsequent calls
+                    }
+        
+                if (data.messages.length > 0) {
+                    let newMessages = [];
+                    data.messages.forEach(msg => {
+                        if (!document.querySelector(`[data-message-id="${msg.id}"]`)) {
+                            newMessages.push(msg);
+                        }
+                    });
+        
+                    newMessages.forEach(msg => {
+                        renderMessage(msg);
+                    });
+        
+                    if (newMessages.length > 0) {
+                        lastMessageId = newMessages[newMessages.length - 1].id; // Update lastMessageId
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching messages:", error);
+                chatBox.innerHTML = `<div class="error">Failed to load messages.</div>`;
+            });
+        }
+
+        setInterval(fetchMessages, 3000);
+        fetchMessages();
+
+        document.getElementById("chatForm").onsubmit = function (event) {
+            event.preventDefault();
+
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value.trim();
+
+            if (message) {
+                fetch("/api/send_message/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "X-CSRFToken": getCSRFToken() },
+                    body: JSON.stringify({ message: message, chat_id: chat_id })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "Message sent") {
+                        messageInput.value = "";
+                        lastMessageId = data.message.id;
+                        fetchMessages();
+                    } else {
+                        alert("Failed to send message.");
+                    }
+                })
+                .catch(error => console.error("Error sending message:", error));
+            }
+        };
+    </script>
+</body>
+</html>

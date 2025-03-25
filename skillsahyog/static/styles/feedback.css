@@ -1,0 +1,88 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f7fc;
+}
+
+header {
+    background: #2b2d42;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.dashboard-container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #3a3d5c;
+    padding: 30px;
+    margin:20px;
+    border-radius: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #EFE9D5;
+    transform: scale(1.1); /* Enlarges link on hover */
+    font-size: 17px;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 20px;
+}
+
+
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #2b2d42;
+    color: #fff;
+    margin-top: 20px;
+}
+

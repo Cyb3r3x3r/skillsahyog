@@ -1,0 +1,149 @@
+/* Import Google Font */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #EFE9D5;
+    color: #27445D;
+    text-align: center;
+    scroll-behavior: smooth;
+}
+
+/* Header */
+header {
+    background-color: #497D74;
+    color: #EFE9D5;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#title-link {
+    text-decoration: none; /* Remove underline from link */
+}
+
+#title-link h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #EFE9D5; /* Tealish green */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#title-link:hover h1 {
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+header .logo h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #EFE9D5;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Features Section */
+.section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.section h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.section ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.section ul li {
+    font-size: 18px;
+    font-weight: 400;
+    background: white;
+    display: block;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    text-align: left;
+} 
+
+/* Footer */
+footer {
+    background-color: #27445D;
+    color: #EFE9D5;
+    text-align: center;
+    padding: 10px 0;
+}
+/* Updated Footer Styling */
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.footer-links, .footer-social, .footer-address {
+    width: 30%;
+    text-align: left;
+}
+
+.footer-links h3, .footer-social h3, .footer-address h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer-links ul, .footer-social ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li, .footer-social ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a, .footer-social ul li a {
+    color: #EFE9D5;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-social ul li a i {
+    margin-right: 8px;
+}
+
+.footer-address p {
+    font-size: 16px;
+}
