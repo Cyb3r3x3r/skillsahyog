@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Find your Exchange Partner</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/match_skills.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'profile_settings' %}">Settings</a></li>
+                <li>
+                    <a href="{% url 'account_settings' %}">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="{% url 'manage_skills' %}">Manage Skills</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'my_feedbacks' %}">Your Feedbacks</a></li>
+                <li><a href="{% url 'my_exchanges' %}">Exchanges and Chatrooms</a></li>
+            </ul>
+        </aside>
+        <!-- Skill Match Content Section -->
+<section class="match-skill-section">
+    <h2>Find Users by Skill</h2>
+    <small>Here, you will find users with the selected skill, sorted using an AI-targeted
+         score to help you find the best matches based on skill and rating. You can click
+          on a user's profile to view their details and send an exchange request.</small>
+    <form method="GET" class="skill-select-form">
+        <!-- Form content goes here -->
+    <form method="GET" class="skill-select-form">
+    <form method="GET" class="skill-select-form">
+        <label for="skill">Choose a Skill:</label>
+        <select name="skill_id" id="skill" required>
+            <option value="">-- Select a Skill --</option>
+            {% for skill in skills %}
+                <option value="{{ skill.id }}" {% if skill.id == selected_skill_id %}selected{% endif %}>
+                    {{ skill.skill_name }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+
+    {% if matched_users %}
+        <div class="matched-users-list">
+            <h3>Matched Users (Sorted by AI Score):</h3>
+            <ul class="user-list">
+                {% for user in matched_users %}
+                    <li class="user-item">
+                        <a href="{% url 'user_profile' user.user.username %}" class="user-link">
+                            <div class="user-info">
+                                <h4>{{ user.user.first_name }} {{ user.user.last_name }} (@{{ user.user.username }})</h4></a>
+                                <p><strong>Score:</strong> {{ user.score }}</p>
+                                <p><strong>Avg. Rating:</strong> {{ user.avg_rating|floatformat:1 }}</p>
+                                {% comment %} <p><strong>AI Score:</strong> {{ user.ai_score|floatformat:2 }}</p> {% endcomment %}
+                            </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% elif selected_skill_id %}
+        <p>No users found with the selected skill.</p>
+    {% endif %}
+</section>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

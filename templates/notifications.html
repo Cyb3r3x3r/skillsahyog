@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your Notifications</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <style>
+        /* Ensure the body and html take full height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header (Ensure it's above the content) */
+.header {
+    background: #27445D;
+    color: #EFE9D5;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    position: relative; /* Keep it in flow */
+    z-index: 10;
+}
+
+/* Footer (Stays at bottom) */
+.footer {
+    background: #27445D;
+    color: #EFE9D5;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    position: relative; /* Keep it in flow */
+    z-index: 10;
+}
+
+/* Notifications Container */
+.notifications-container {
+    flex-grow: 1; /* Makes this take up the remaining space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #27445D; /* Background color */
+    padding: 20px;
+    overflow-y: auto; /* Allows scrolling if needed */
+}
+
+/* Notification List */
+.notifications-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    max-width: 800px;
+}
+
+/* Individual Notification Item */
+/* Notification Item */
+.notification-item {
+    font-size: 20px;
+    font-weight: bold;
+    color: #EFE9D5;
+    text-shadow: 1px 1px 2px black;  /* Adds a subtle black border */
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #497D74, #EFE9D5, #27445D);
+    background-size: 300% 300%;
+    animation: colorShift 6s infinite linear, fadeIn 1s ease-in-out;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+.notification-item:hover {
+    animation: colorShift 6s infinite linear, vibrate 0.2s infinite;
+    cursor: pointer;
+}
+
+/* No Notifications */
+.no-notifications {
+    font-size: 22px;
+    text-align: center;
+    color: #EFE9D5;
+    padding: 15px;
+}
+
+/* Animation: Color Shifting */
+@keyframes colorShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Animation: Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation: Vibration */
+@keyframes vibrate {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(2px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .notifications-list {
+        width: 95%;
+    }
+
+    .notification-item {
+        font-size: 18px;
+        padding: 12px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'account_settings' %}">Settings</a></li>
+                    <a href="#">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="notifications-container">
+        <ul class="notifications-list">
+            {% for noti in notifications %}
+                <li class="notification-item">{{ noti.message }}</li>
+            {% empty %}
+                <li class="no-notifications">No notifications available.</li>
+            {% endfor %}
+        </ul>
+    </section>    
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Settings</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/settings.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li>
+                    <a href="#">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="profile-verification-container">
+        <section class="verify-profile-section">
+            <h2>Verify Your Profile</h2>
+    
+            {% if not request.user.profile_verified %}
+            <p class="normal-text">Your profile is not verified. While this won’t prevent you from making exchange requests, 
+                other users may be less likely to accept requests from an unverified user.</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    {% if not otp_sent %}
+                        <button type="submit" name="send_otp">Send OTP to Email</button>
+                    {% else %}
+                        <input type="text" name="otp" placeholder="Enter OTP" required>
+                        <button type="submit" name="verify_otp">Verify OTP</button>
+                    {% endif %}
+                </form>
+            {% else %}
+                <p>Your profile is already verified ✅.</p>
+            {% endif %}
+        </section>
+        {% comment %} <div class="disable-account-container"> {% endcomment %}
+            <section class="disable-account-section">
+                <h2>Disable Your Account</h2>
+                <p class="normal-text">Disabling your account will make your profile inactive, and you will no longer be able to log in. You can contact support to reactivate your account.</p>
+                <form method="POST" action="{% url 'disable_account' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="disable-button">Disable Account</button>
+                </form>
+            </section>
+        {% comment %} </div> {% endcomment %}
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

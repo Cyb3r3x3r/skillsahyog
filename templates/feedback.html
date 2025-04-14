@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rate your Exchanges</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/feedback.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+</head>
+<body>
+    
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Settings</a></li>
+                <li>
+                    <a href="#">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png{% else %}{{ MEDIA_URL }}avatars/female_default.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'manage_skills' %}">Manage Skills</a></li>
+            <li><a href="#">Browse Skills</a></li> 
+            <li><a href="#">Skill Matching</a></li>
+            <li><a href="#">Exchange Requests</a></li>
+        </ul>
+    </aside>
+
+    <!-- Feedback Form -->
+    <main class="main-content">
+        <div class="feedback-container">
+            <h2>Rate Your Exchange</h2>
+            <form class="feedback-form" method="POST" action="{% url 'feedback' exchange_id=exchange.id %}">
+                {% csrf_token %}
+                <!-- Auto-filled Status Field -->
+                <label for="status">Exchange Status:</label>
+                <input type="text" id="status" name="status" value="{{ status }}" readonly>
+            
+                <!-- Feedback Text Field -->
+                <label for="feedback">Your Feedback:</label>
+                <textarea id="feedback" name="feedback" rows="4" placeholder="Share your experience..." required></textarea>
+            
+                <!-- Rating Field -->
+                <label for="rating">Rate Your Partner:</label>
+                <select id="rating" name="rating" required onchange="updateSkillScore()">
+                    <option value="" disabled selected>Select a rating</option>
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="5">5 - Excellent</option>
+                </select>
+            
+                <!-- Skill Score (Auto-calculated) -->
+                <label for="skill_score">Calculated Skill Score:</label>
+                <input type="text" id="skill_score" name="skill_score" value="{{ skill_score }}" readonly>
+            
+                <!-- Submit Button -->
+                <button type="submit" class="submit-button">Submit Feedback</button>
+            </form>
+        </div>
+    </main>
+</div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+    <script>
+        function updateSkillScore() {
+            const rating = document.getElementById("rating").value;
+            const exchangeId = "{{ exchange.id }}";  // Pass the exchange ID to the API
+    
+            if (!rating) return;
+    
+            fetch(`/calculate-skill-score/${exchangeId}/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: `rating=${rating}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.skill_score) {
+                    document.getElementById("skill_score").value = data.skill_score.toFixed(2);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
