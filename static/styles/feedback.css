@@ -1,0 +1,178 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f7fc;
+}
+
+header {
+    background: #2b2d42;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    gap: 20px; /* Add some gap between sidebar and content */
+    padding: 20px;
+}
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #3a3d5c;
+    padding: 30px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, font-size 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #497D74;
+    color: #EFE9D5;
+    transform: scale(1.05);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin: 20px;
+}
+
+/* Feedback Form */
+.feedback-container {
+    max-width: 100%; /* Make sure the form takes full width within the content */
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 2px solid #497D74;
+}
+
+.feedback-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #27445D;
+}
+
+.feedback-container label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: #497D74;
+}
+
+.feedback-container input[type="text"],
+.feedback-container textarea,
+.feedback-container select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: 1.5px solid #497D74;
+    border-radius: 8px;
+    background-color: #EFE9D5;
+    font-size: 16px;
+    color: #27445D;
+    transition: all 0.3s ease;
+}
+
+.feedback-container textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.feedback-container input[type="text"]:focus,
+.feedback-container textarea:focus,
+.feedback-container select:focus {
+    outline: none;
+    border-color: #27445D;
+    background-color: #f4f4f4;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #497D74;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #27445D;
+}
+
+.submit-button:active {
+    background-color: #1c3343;
+}
+
+.feedback-container select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #EFE9D5;
+}
+
+.feedback-container select option {
+    color: #27445D;
+}
+
+.feedback-container textarea::placeholder {
+    color: #497D74;
+    opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #2b2d42;
+    color: #fff;
+    margin-top: 20px;
+}

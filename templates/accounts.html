@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Account Settings</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/accounts.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li>
+                    <a href="#">
+                        <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}
+                         {% elif request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+                         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+                         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}"
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="profile-account-container">
+        <section class="account-details-section">
+            <h2>Account Details</h2>
+            
+            <!-- Non-editable Fields -->
+            <div class="static-info">
+                <p><strong>Username:</strong> {{ request.user.username }}</p>
+                <p><strong>Email:</strong> {{ request.user.email }}</p>
+                <p><strong>Date of Birth:</strong> {{ request.user.dob|date:'Y-m-d' }}</p>
+                <p><strong>Sex:</strong> {{ request.user.get_sex_display }}</p>
+                <p><strong>Phone Number:</strong> {{ request.user.phone_number }}</p>
+            </div>
+
+            <!-- Editable Fields -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name" value="{{ request.user.first_name }}">
+
+                <label for="last_name">Last Name</label>
+                <input type="text" name="last_name" value="{{ request.user.last_name }}">
+
+                <label for="profile_picture">Profile Picture</label>
+                <input type="file" name="profile_picture" accept="image/*">
+
+                <label for="bio">Bio</label>
+                <textarea name="bio" rows="4" placeholder="Tell us about yourself...">{{ request.user.bio }}</textarea>
+
+                <label for="location">Location</label>
+                <input type="text" name="location" value="{{ request.user.location }}" placeholder="Enter your location">
+
+                <button type="submit" class="save-button">Save Changes</button>
+            </form>
+            {% if success_message %}
+    <div class="message success">{{ success_message }}</div>
+{% endif %}
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,273 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f7fc;
+}
+
+header {
+    background: #2b2d42;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.dashboard-container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #3a3d5c;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #EFE9D5;
+    transform: scale(1.1); /* Enlarges link on hover */
+    font-size: 17px;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 20px;
+}
+
+/* Profile Card */
+.profile-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Background for Verified Users */
+.profile-card.verified {
+    background: linear-gradient(135deg, #71BBB2, #497D74, #27445D);
+    background-size: 200% 200%;
+    animation: gradientAnimation 5s ease infinite;
+    color: #fff;
+}
+/* Gradient Background for Verified Users */
+.profile-card.admin {
+    background: linear-gradient(135deg, #af8d8a, #974a4a, #cf1919);
+    background-size: 200% 200%;
+    animation: gradientAnimation 5s ease infinite;
+    color: #fff;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Adjusted Text Color for Verified Card */
+.profile-card.verified h2, 
+.profile-card.verified small,
+.profile-card.verified h3,
+.profile-card.verified p {
+    color: #EFE9D5;
+}
+
+/* Link Color Adjustment */
+.profile-card.verified .self-profile-link {
+    color: #EFE9D5;
+    text-decoration: underline;
+}
+
+.profile-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.profile-card h2 {
+    margin: 10px 0 5px;
+}
+
+/* Exchange Stats */
+.exchange-stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat {
+    flex: 1;
+    background: #fff;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Suggested Skills */
+.suggested-skills, .recent-notifications, .skillsahyog-score, .exchange-request {
+    background: #fff;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggested-skills ul, .recent-notifications ul {
+    list-style: none;
+    padding: 0;
+}
+
+.suggested-skills li, .recent-notifications li {
+    margin: 5px 0;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #2b2d42;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.user-link, .self-profile-link {
+    color:#497D74;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+    text-decoration: none; 
+}
+.user-link, .self-profile-link:hover{
+    transform: scale(1.1);
+}
+/* Active Chatrooms Section */
+.active-chatrooms {
+    background: #fff;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Title Box */
+.active-chatrooms h3 {
+    background: #497D74;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* Chatroom List */
+.active-chatrooms ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Chatroom Card */
+.active-chatrooms li {
+    background: #f4f7fc;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.active-chatrooms li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Styled Chat Button */
+.active-chatrooms .join-chat-btn {
+    background: #497D74;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.active-chatrooms .join-chat-btn:hover {
+    background: #2b2d42;
+    transform: scale(1.1);
+}
+
+.verified-check {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #28a745; /* Green from palette */
+    margin-left: 3px;
+    position: relative;
+    animation: fadeIn 0.8s ease-in-out, circling 1.5s infinite alternate;
+}
+
+/* Fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Circling animation */
+@keyframes circling {
+    0% {
+        transform: rotate(0deg) translateX(2px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(2px) rotate(-360deg);
+    }
+}

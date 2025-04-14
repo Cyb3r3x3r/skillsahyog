@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ request.user.first_name }}</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+    <style>
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            top: -10px;
+            left: -5px;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'profile_settings' %}">Settings</a></li>
+                <li><a href="#recent-noti" id="notification-icon">
+                    Notifications <span id="notif-dot" class="notification-dot"></span>
+                </a></li>
+                <li>
+                    <a href="{% url 'account_settings' %}">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <input type="hidden" id="csrf_token" value="{{ csrf_token }}">
+    <input type="hidden" id="user_id" value="{{ request.user.id }}">
+
+    <main class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="{% url 'manage_skills' %}">Manage Skills</a></li>
+                <li><a href="{% url 'match_skill' %}">Skill Matching</a></li>
+                <li><a href="{% url 'my_feedbacks' %}">Your Feedbacks</a></li>
+                <li><a href="{% url 'my_exchanges' %}">Exchanges and Chatrooms</a></li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <!-- Profile Card -->
+            <section class="profile-card 
+    {% if request.user.is_superuser %}admin
+    {% elif request.user.profile_verified %}verified
+    {% endif %}">
+                <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% else %}{{ MEDIA_URL }}avatars/male_default.png{% endif %}" 
+                    alt="Profile Picture">
+                <h2>
+                    {{ request.user.first_name }}
+                    {% if request.user.profile_verified %}
+                        <span class="verified-check">✔</span>
+                    {% endif %}
+                </h2>
+                <small>Username: {{ request.user.username }}</small>
+                {% if request.user.is_superuser %}
+                    <h3>Admin</h3>
+                {% else %}
+                    <h3>Skillsahyog User</h3>
+                {% endif %}
+                <p>Skills: 
+                    {% if selected_skill %}
+                        <strong>{{ selected_skill.skill.skill_name }}</strong> (Level: {{ selected_skill.skill_level }})
+                    {% else %}
+                        <strong>No skills added yet.</strong>
+                    {% endif %}
+                </p>
+                <small>
+                    <a class="self-profile-link" href="{% url 'user_profile' username=request.user.username %}">
+                        View your public profile
+                    </a>
+                </small>    
+            </section>
+
+            <!-- Exchange Stats -->
+            <section class="exchange-stats">
+                <div class="stat">
+                    <h3>{{ completed_requests_count }}</h3>
+                    <p>Total Exchanges</p>
+                </div>
+                <div class="stat">
+                    <h3>{{ sent_requests_count }}</h3>
+                    <p>Sent Requests</p>
+                </div>
+                <div class="stat">
+                    <h3>{{ pending_requests_count }}</h3>
+                    <p>Pending Requests</p>
+                </div>
+            </section>
+
+            <!-- Suggested Skills to Learn -->
+            <section class="suggested-skills">
+                <h3>Suggested Skills to Learn</h3>
+                <ul>
+                    {% for skill in suggested_skills %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <!-- Recent Notifications -->
+            <section id="recent-noti" class="recent-notifications">
+                <h3>Recent Notifications</h3>
+                <ul id="notification-list">
+        <p><a href="{% url 'notifications' %}">View notifications</a></p>
+                </ul>
+            </section>
+
+            <!-- Skill Sahyog Score -->
+            <section class="skillsahyog-score">
+                <h3>Your Skill Sahyog Score</h3>
+                <p>Score: <strong>{{ rank_details.score }}</strong></p>
+                <p>Rank: <strong>{{ rank_details.rank }}</strong></p>
+            </section>
+
+            <!-- Exchange Requests Section -->
+            <section class="exchange-request">
+                <h3>Pending Exchange Requests ({{ pending_requests_count }})</h3>
+                <ul>
+                {% for request in pending_requests %}
+                    <li>
+                        <strong><a class="user-link" href="{% url 'user_profile' username=request.sender.username%}">{{ request.sender.first_name }}</a></strong> wants to exchange 
+                        <strong>{{ request.sender_skill.skill_name }}</strong> for 
+                        <strong>{{ request.receiver_skill.skill_name }}</strong><br>
+                        <a href="{% url 'accept_exchange_request' request.id %}">Accept</a> |
+                        <a href="{% url 'reject_exchange_request' request.id %}">Reject</a>
+                    </li>
+                {% empty %}
+                    <li>No pending requests</li>
+                    {% endfor %}
+                    </ul>
+            </section>
+            <!-- Active Chatrooms Section -->
+            <section class="active-chatrooms">
+                <h3>Active Chatrooms</h3>
+                <ul>
+                    {% for chat in active_chats %}
+                        <li>
+                            <span>
+                                Chat with 
+                                {% if chat.user1 == request.user %}
+                                    <strong>{{ chat.user2.first_name }}</strong>
+                                {% else %}
+                                    <strong>{{ chat.user1.first_name }}</strong>
+                                {% endif %}
+                            </span>
+                            <a href="{% url 'chat_page' chat.room_id %}" class="join-chat-btn">Join Chat</a>
+                        </li>
+                    {% empty %}
+                        <li>No active chatrooms</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <script>
+                function getCSRFToken() {
+                    return document.getElementById('csrf_token').value;
+                }
+                
+                function acceptRequest(requestId) {
+                    fetch(`/exchange/accept/${requestId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCSRFToken(),
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.chat_id) {
+                            window.location.href = `/chat/${data.chat_id}/`;  // Redirect to chat room
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+                
+                    function rejectRequest(requestId) {
+                        fetch(`/exchange/reject/${requestId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCSRFToken(),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                            window.location.href = "/dashboard/"; // Redirect to the dashboard
+                        })
+                        .catch(error => console.error('Error:', error));
+                    }
+            </script>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+    <audio id="notification-sound">
+        <source src="{% static 'sounds/notification.mp3' %}" type="audio/mpeg">
+    </audio>
+    <script>
+        const userId = document.getElementById("user_id").value;
+        const socket = new WebSocket(`ws://${window.location.host}/ws/notifications/${userId}/`);
+        const notifDot = document.getElementById("notif-dot");
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const notificationList = document.getElementById("notification-list");
+        
+            const newNotification = document.createElement("li");
+            newNotification.textContent = data.message;
+            notificationList.prepend(newNotification);
+        
+            document.getElementById("notification-sound").play();
+        
+            notifDot.style.visibility = "visible";
+            localStorage.setItem("hasUnreadNotifications", "true");
+        };
+        
+        document.getElementById("notification-icon").addEventListener("click", () => {
+            notifDot.style.visibility = "hidden";
+            localStorage.setItem("hasUnreadNotifications", "false");
+        });
+        
+        window.onload = function() {
+            if (localStorage.getItem("hasUnreadNotifications") === "true") {
+                notifDot.style.visibility = "visible";
+            }
+        };
+    </script>
+</body>
+</html>

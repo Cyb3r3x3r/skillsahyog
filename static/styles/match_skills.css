@@ -1,0 +1,161 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f7fc;
+}
+.dashboard-container {
+    display: flex;
+    padding: 20px;
+}
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #3a3d5c;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #EFE9D5;
+    transform: scale(1.1); /* Enlarges link on hover */
+    font-size: 17px;
+}
+
+.match-skill-section {
+    padding: 30px;
+    background-color: #EFE9D5;
+    flex-grow: 1;
+    margin-left: 20px;
+    border-radius: 8px;
+}
+
+.skill-select-form {
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.skill-select-form select {
+    padding: 10px;
+    border: 2px solid #497D74;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.skill-select-form button {
+    background: linear-gradient(135deg, #497D74, #27445D);
+    color: #EFE9D5;
+    padding: 10px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.skill-select-form button:hover {
+    background: linear-gradient(135deg, #27445D, #497D74);
+    transform: translateY(-1px);
+}
+
+.matched-users-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.matched-users-list li {
+    margin: 10px 0;
+}
+
+.matched-users-list a {
+    color: #27445D;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.matched-users-list a:hover {
+    text-decoration: underline;
+}
+/* User List Styling */
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual User Item Styling */
+.user-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover Effects on User Item */
+.user-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f0f8ff; /* Light blue background on hover */
+}
+
+/* Link Styling */
+.user-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Hover Effect on User Link */
+.user-link:hover {
+    text-decoration: underline;
+}
+
+/* User Info Styling */
+.user-info h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+}
+
+.user-info p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.user-info p strong {
+    color: #007bff;
+}
+
+/* Responsive Design for User List */
+@media (max-width: 600px) {
+    .user-list {
+        grid-template-columns: 1fr; /* Stacks user items on small screens */
+    }
+}
+

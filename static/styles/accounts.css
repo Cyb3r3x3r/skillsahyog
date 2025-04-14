@@ -1,0 +1,136 @@
+/* Profile Account Container */
+.profile-account-container {
+    width: 100%;
+    padding: 20px 40px;
+    background: #EFE9D5; /* Off-white background */
+    color: #27445D; /* Dark blue text */
+    border-radius: 0;
+    box-shadow: none;
+    overflow: auto; /* Use auto instead of hidden */
+}
+
+/* Section Styling */
+.account-details-section {
+    padding: 20px;
+    text-align: left;
+}
+
+/* Section Divider */
+.account-details-section::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #497D74, #71BBB2, #497D74);
+    margin: 20px 0;
+}
+
+/* Headings */
+.account-details-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #27445D; /* Dark blue */
+    margin-bottom: 15px;
+}
+
+/* Form Elements */
+.account-details-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* Input Fields */
+.account-details-section input[type="text"],
+.account-details-section input[type="email"],
+.account-details-section input[type="file"],
+.account-details-section textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 10px; /* Added margin to create space */
+    border: 2px solid #497D74;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+    background: #ffffff;
+    color: #27445D;
+}
+
+.account-details-section input[readonly] {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+.account-details-section input:focus,
+.account-details-section textarea:focus {
+    border-color: #71BBB2;
+    outline: none;
+}
+
+/* Textarea */
+.account-details-section textarea {
+    resize: vertical;
+}
+
+/* Save Button */
+.save-button {
+    background: linear-gradient(135deg, #497D74, #27445D);
+    color: #EFE9D5;
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 3px 6px rgba(0, 123, 255, 0.2);
+}
+
+.save-button:hover {
+    background: linear-gradient(135deg, #27445D, #497D74);
+    transform: translateY(-2px);
+}
+
+/* Static Information Styling */
+.static-info {
+    background-color: #f4f4f4;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.static-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .profile-account-container {
+        padding: 20px;
+    }
+
+    .account-details-section input[type="text"],
+    .account-details-section input[type="email"],
+    .account-details-section textarea {
+        width: 100%;
+    }
+}
+
+/* Message Styling */
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #28a745;
+    color: white;
+}
