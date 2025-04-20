@@ -34,10 +34,9 @@
         <aside class="sidebar">
             <ul>
                 <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                <li><a href="#">Manage Skills</a></li>
-                <li><a href="#">Browse Skills</a></li>
-                <li><a href="#">Skill Matching</a></li>
-                <li><a href="#">Exchange Requests</a></li>
+                <li><a href="{% url 'manage_skills' %}">Manage Skills</a></li>
+                <li><a href="{% url 'match_skill' %}">Skill Matching</a></li>
+                <li><a href="{% url 'my_exchanges' %}">Exchange Requests</a></li>
             </ul>
         </aside>
         

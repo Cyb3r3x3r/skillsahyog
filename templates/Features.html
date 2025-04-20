@@ -35,6 +35,22 @@
             <li>🔹 Community Reviews - Build trust with transparent ratings and feedback.</li>
         </ul>
     </section>
+    <section id="contact" class="contact-section">
+        <h2>📬 Contact Us</h2>
+        <form action="{% url 'submit_contact_form' %}" method="POST" class="contact-form">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+    
+            <label for="email">Registered Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+    
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
 
     <!-- Footer Section -->
     <footer class="footer">
@@ -43,9 +59,9 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms & Conditions</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'features' %}#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-social">
@@ -54,7 +70,7 @@
                     <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
                     <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
                     <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="https://www.linkedin.com/in/shivamraj008/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
                 </ul>
             </div>
             <div class="footer-address">

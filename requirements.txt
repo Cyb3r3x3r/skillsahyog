@@ -1,0 +1,14 @@
+Django
+channels
+channels-redis
+daphne
+gunicorn
+psycopg2-binary
+dj-database-url
+google-cloud-pubsub
+numpy
+scikit-learn
+djangorestframework
+asgiref
+dotenv
+Pillow

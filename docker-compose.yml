@@ -1,0 +1,32 @@
+#version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: skillsahyog_web
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+    healthcheck:
+      test: ["CMD","redis-cli","ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  static_volume:
+  media_volume:

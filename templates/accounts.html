@@ -18,16 +18,8 @@
         </div>
         <nav>
             <ul>
+                <li><a href="{% url 'profile_settings' %}">Settings</a></li>
                 <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                <li>
-                    <a href="#">
-                        <img src="{% if request.user.profile_picture %}{{ request.user.profile_picture.url }}
-                         {% elif request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
-                         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
-                         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}"
-                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
-                    </a>
-                </li>
                 <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
             </ul>
         </nav>
@@ -39,6 +31,13 @@
             
             <!-- Non-editable Fields -->
             <div class="static-info">
+                {% if request.user.profile_picture %}
+    <div class="current-profile-picture">
+        <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;">
+    </div>
+{% else %}
+    <p>No profile picture uploaded.</p>
+{% endif %}
                 <p><strong>Username:</strong> {{ request.user.username }}</p>
                 <p><strong>Email:</strong> {{ request.user.email }}</p>
                 <p><strong>Date of Birth:</strong> {{ request.user.dob|date:'Y-m-d' }}</p>

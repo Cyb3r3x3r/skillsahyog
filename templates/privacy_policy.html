@@ -1,0 +1,134 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Skill Sahyog</title>
+    <!-- Adding Google Font (Poppins) -->
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .policy-card {
+            width: 80%;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px 20px;
+            margin: 40px;
+        }
+        
+        .policy-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+        
+        .policy-content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .policy-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .policy-content a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .policy-content a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'features' %}">Features</a></li>
+                <li><a href="{% url 'howitworks' %}">How It Works</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            {% else %}
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <section class="policy-card">
+        <div class="policy-content">
+            <h2>Privacy Policy</h2>
+            <h3>1. Introduction</h3>
+            <p>SkillSahyog values your privacy.
+                 This Privacy Policy outlines how we collect, use, and protect your personal information when you use our platform.</p>
+            <h3>2. Information We Collect</h3>
+            <p><ul><li>Account Information: Username, email, date of birth, profile details.</li>
+                <li>Skill Data: Skills offered/received, ratings, feedback.</li>
+                <li>Chat Data: Messages exchanged in skill chats.</li>
+                <li>Device & Usage Data: IP address, browser info (standard logs).</li></ul></p>
+            <h3>3. How We Use Your Information</h3>
+                <p><ul><li>To match you with skill partners.</li>
+                    <li>To personalize user experience.</li>
+                    <li>To improve platform functionality.</li>
+                    <li>To send real-time notifications.</li>
+                <li>To maintain safety and integrity.</li></ul></p>
+            <h3>4. Data Sharing</h3>
+                <p>We do not sell your data. Limited information is shared with:
+                    <ul><li>Notification services (e.g., Google Cloud Pub/Sub).</li>
+                    <li>Authorized service providers for platform support.</li></ul></p>
+            <h3>5. Data Retention</h3>
+                    <p>Your data is stored securely and retained as long as your account
+                         is active or as needed to provide services.</p>
+            <h3>6. Security</h3>
+                    <p>We use industry-standard measures (encryption, access control) to protect your data.</p>
+            <h3>7. Your Rights</h3>
+                    <p>You may request access to your data, correction of inaccuracies, or deletion of your profile at any time.</p>
+            <h3>8. Contact Us</h3>
+                    <p>For any concerns, contact us at <a href="mailto:skillsahyogofficial@gmail.com">our email</a> .</p>
+        </div>
+    </section>
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="https://www.linkedin.com/in/shivamraj008/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+            </div>
+            <div class="footer-address">
+                <h3>Our Address</h3>
+                <p>34, 91st Main Stage,<br>
+                2nd Cross Vyasaraya Ballal Rd <br> Bengaluru, Karnataka, India</p>
+            </div>
+        </div>
+        <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+    </footer>
+
+
+    <script src="{% static 'scripts.js' %}"></script>
+</body>
+</html>

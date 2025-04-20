@@ -10,6 +10,44 @@
     {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .policy-card {
+            width: 80%;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px 20px;
+            margin: 40px;
+        }
+        
+        .policy-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+        
+        .policy-content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .policy-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .policy-content a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .policy-content a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
 </head>
 <body>
     <header>
@@ -28,47 +66,29 @@
             </ul>
         </nav>
     </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Empower the Community by<br/><span id="dynamic-text" class="typing-effect"></span></h2>
-            <p>Exchange skills and services with your local community in a trusted, collaborative environment.</p>
-            <a href="{% url 'signin' %}" class="cta-button">Login now to get started</a>
+    <section class="policy-card">
+        <div class="policy-content">
+            <h2>📜 Terms & Conditions for SkillSahyog</h2>
+            <h3>1. Acceptance of Terms</h3>
+            <p>By using SkillSahyog, you agree to these Terms and our Privacy Policy.</p>
+            <h3>2. Platform Purpose</h3>
+            <p>SkillSahyog is a community platform for mutual skill exchange. No monetary transactions or time credits are involved.</p>
+            <h3>3. User Responsibilities</h3>
+                <p><ul><li>You agree to provide accurate skill and profile information.</li>
+                    <li>You may not use the platform for harassment or commercial gain.</li>
+                    <li>You must respect the other user’s consent, time, and boundaries.</li></ul></p>
+            <h3>4. Account Termination</h3>
+                <p>We reserve the right to suspend or terminate accounts that violate our guidelines.</p>
+            <h3>5. Content Ownership</h3>
+                    <p>Users retain ownership of content they create, but grant us a license to display and use it for platform functionality.</p>
+            <h3>6. Limitation of Liability</h3>
+                    <p>SkillSahyog is not liable for disputes between users. We encourage respectful and honest exchanges.</p>
+            <h3>7. Modifications</h3>
+                    <p>We may update these Terms periodically. Continued use implies acceptance of the revised terms.</p>
+            <h3>8. Contact Us</h3>
+                    <p>If you have questions, reach out to us at <a href="mailto:skillsahyogofficial@gmail.com">our email</a> .</p>
         </div>
     </section>
-
-    <section id="features" class="section">
-        <h2>Platform Features</h2>
-        <div class="feature-cards">
-            <div class="card">
-                <h3>Skill Listings</h3>
-                <p>Easily list the skills and services you can offer.</p>
-            </div>
-            <div class="card">
-                <h3>Skill Matching</h3>
-                <p>AI-powered skill matching helps you find the right person quickly.</p>
-            </div>
-            <div class="card">
-                <h3>Real-Time Notifications</h3>
-                <p>Get notified instantly when someone requests your skill.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="how-it-works" class="section">
-        <h2>How It Works</h2>
-        <p>1. Sign up for free and create a profile.</p>
-        <p>2. List your skills and offer them to the community.</p>
-        <p>3. Browse and request skills from others based on your needs.</p>
-        <p>4. Connect, exchange, and build lasting relationships.</p>
-    </section>
-
-    <section id="signup" class="section signup-section">
-        <h2>Sign Up</h2>
-        <p>Join the community and start exchanging your skills today!</p>
-        <a href="{% url 'signup' %}" class="cta-button">Sign Up Now</a>
-    </section>
-
     <!-- Footer Section -->
     <footer class="footer">
         <div class="footer-content">

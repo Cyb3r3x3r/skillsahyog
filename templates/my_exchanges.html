@@ -104,45 +104,49 @@
 
         <h3>Exchange History</h3>
         {% if exchanges %}
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Exchange ID</th>
-                        <th>Sender</th>
-                        <th>Receiver</th>
-                        <th>Status</th>
-                        <th>Chatroom</th>
-                        <th>Chatroom Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for exchange in exchanges %}
-                        <tr>
-                            <td>{{ exchange.id }}</td>
-                            <td>{{ exchange.sender.username }}</td>
-                            <td>{{ exchange.receiver.username }}</td>
-                            <td>{{ exchange.status|title }}</td>
-                            <td>
-                                {% for chat in chatrooms %}
-                                {% if exchange.chatroom %}
-                                <a href="{% url 'chat_page' exchange.chatroom.room_id %}">View Chatroom</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Exchange ID</th>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Status</th>
+                <th>Chatroom</th>
+                <th>Chatroom Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exchange in exchanges %}
+                <tr>
+                    <td>{{ exchange.id }}</td>
+                    <td>{{ exchange.sender.username }}</td>
+                    <td>{{ exchange.receiver.username }}</td>
+                    <td>{{ exchange.status|title }}</td>
+                    <td>
+                        {% if exchange.attached_chatroom and exchange.chat_access and exchange.chat_access.is_active %}
+                            <a href="{% url 'chat_page' exchange.attached_chatroom.room_id %}">View Chatroom</a>
+                        {% else %}
+                            No chatroom available
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if exchange.chat_access %}
+                            {% if exchange.chat_access.is_active %}
+                                Active
                             {% else %}
-                                <p>No chatroom available</p>
+                                Inactive
                             {% endif %}
-                                
-                            </td>
-                            {% if chat.is_active %}
-                                <td>Active</td>
-                            {% else %}
-                                <td>Inactive</td>
-                            {% endif %}
-                            {% endfor %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>No exchanges found.</p>
-        {% endif %}
+                        {% else %}
+                            Not Available
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No exchanges found.</p>
+{% endif %}
     </div>
 
     <footer class="footer">

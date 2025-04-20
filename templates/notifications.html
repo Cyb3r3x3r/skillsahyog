@@ -139,7 +139,7 @@ html, body {
             <ul>
                 <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                 <li><a href="{% url 'account_settings' %}">Settings</a></li>
-                    <a href="#">
+                    <a href="{% url 'profile_settings' %}">
                         <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
          {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
          {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 

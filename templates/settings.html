@@ -20,7 +20,7 @@
             <ul>
                 <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'account_settings' %}">
                         <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
          {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
          {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 

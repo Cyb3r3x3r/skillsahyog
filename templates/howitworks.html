@@ -23,11 +23,57 @@
     </header>
 
     <section id="how-it-works" class="section">
-        <h2>How It Works</h2>
-        <p>1. Sign up for free and create a profile.</p>
-        <p>2. List your skills and offer them to the community.</p>
-        <p>3. Browse and request skills from others based on your needs.</p>
-        <p>4. Connect, exchange, and build lasting relationships.</p>
+        <h2>🛠️ How SkillSahyog Works</h2>
+        <h3>🔹 Step-by-Step Guide to Your First Skill Exchange</h3>
+        <p><h4>1. Create Your Account</h4>
+            Sign up on SkillSahyog with your email address and basic details.
+             Your account will allow you to showcase your skills and connect with others in the community.</p>
+        <p><h4>2. Complete Your Profile</h4>
+            Add your profile picture, a short bio, location, and list the skills you can offer or want to learn.
+             The more detailed your profile, the easier it is to match with the right users.</p>
+        <p><h4>3. Browse or Search for Skills</h4>
+            Explore available skills by going to the <a href="{% url 'match_skill' %}">Skill Matching</a> page.
+            You can search user by choosing the skill from the dropdown you want help with
+        and a list of users sorted based on AI algorithm will be displayed to you.</p>
+        <p><h4>4. Send an Exchange Request</h4>
+            Once you find a match, send an exchange request by going to their profile.
+            Also keep in mind it is recommended to send request to only verified users.
+             For example, you can offer Python help in exchange for Cloud computing.</p>
+        <p><h4>5. Chat & Collaborate</h4>
+            When your request is accepted, a private chatroom will be created for both of you.
+            You can access you chatroom from your dashboard.
+            Use this space to discuss schedules and learn from each other.</p>
+        <p><h4>6. Complete the Exchange & Leave Feedback</h4>
+            Once your exchange is complete, leave a rating and feedback for your partner.
+            An automatic AI generated score will be assigned to both of you based on the
+            ratings you have received.The feedback system helps maintain trust and improves user rankings.</p>
+
+        <h2>❓Frequently Asked Questions</h2>
+        <h3>📌 What kinds of skills can I exchange?</h3>
+        <p>You can exchange any kind of skill — from gardening and teaching to coding or digital marketing.
+             If you don’t see your skill listed, go to <a href="{% url 'manage_skills' %}">Manage Skill</a> in your dashboard and request it to be added.</p>
+        <h3>💸 Is there any payment involved?</h3>
+        <p>Absolutely not — SkillSahyog is completely free to use for the first few exchanges. We believe in building a community that thrives on mutual skill-sharing rather than money or time-credits.
+            That said, to ensure fair usage and support platform sustainability,
+             we may introduce a nominal subscription fee in the future for users who exceed a certain number of exchanges.
+             Don’t worry — basic access and initial exchanges will always remain free for everyone.</p>
+        <h3>🧩 What happens if someone doesn't complete the exchange?</h3>
+        <p>An exchange is only completed after both users submit their ratings and reviews.
+             Until then, the chatroom stays active. Only after feedback from both sides is the skill score calculated.</p>
+        <h3>❌ Can I reject an exchange request?</h3>
+        <p>Yes! If you're not interested or available, 
+            just click the "Reject" button on your dashboard next to the exchange request.</p>
+        <h3>📈 How does the rank and score system work?</h3>
+        <p>Your profile rank and score are calculated using:<br>
+            1. Skill Demand: How many times your skill is requested by others.<br>
+            2. User Ratings: Feedback you receive from successful exchanges. Together, they help others see your credibility and popularity on the platform.</p>
+        <h3>❓ How can I verify my account?</h3>
+        <p>To verify your account, go to the <a href="{% url 'account_settings' %}">Settings</a> page and request an OTP (One-Time Password).
+             The OTP will be sent to your registered email address. Enter it to complete the verification process.
+            <strong>✅ Why verify?</strong> Verified users have a higher chance of their exchange requests being accepted by others</p>
+        <h3>❓ How can I get support or ask for help?</h3>
+        <p>If you need help or want to share feedback, simply fill out the contact form available at the bottom of the Features page.
+             The SkillSahyog team will get back to you shortly.</p>
     </section>
 
     <!-- Footer Section -->
@@ -37,9 +83,9 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms & Conditions</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'features' %}#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-social">
@@ -48,7 +94,7 @@
                     <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
                     <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
                     <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="https://www.linkedin.com/in/shivamraj008/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
                 </ul>
             </div>
             <div class="footer-address">

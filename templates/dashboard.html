@@ -94,6 +94,24 @@
                     </a>
                 </small>    
             </section>
+            <!--Contact form messages-->
+            {% if request.user.is_superuser %}
+            <section class="admin-contact-messages">
+                <h3>📩 Unread Support Messages</h3>
+                <ul id="unread-messages-list">
+                    {% for msg in unread_contact_messages %}
+                        <li id="message-{{ msg.id }}">
+                            <strong>{{ msg.username }}</strong> (<em>{{ msg.email }}</em>)<br>
+                            <<p>{{ msg.message }}</p><br>
+                            <button onclick="markAsRead({{ msg.id }})">Mark as Read</button>
+                            <hr>
+                        </li>
+                    {% empty %}
+                        <li>No unread contact messages.</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
 
             <!-- Exchange Stats -->
             <section class="exchange-stats">
@@ -209,6 +227,23 @@
                         .then(data => {
                             alert(data.message);
                             window.location.href = "/dashboard/"; // Redirect to the dashboard
+                        })
+                        .catch(error => console.error('Error:', error));
+                    }
+                    function markAsRead(messageId) {
+                        fetch(`/contact/mark-read/${messageId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCSRFToken(),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const msgElement = document.getElementById(`message-${messageId}`);
+                                if (msgElement) msgElement.remove();
+                            }
                         })
                         .catch(error => console.error('Error:', error));
                     }
