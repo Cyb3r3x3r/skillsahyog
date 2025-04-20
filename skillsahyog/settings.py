@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xot9t0=&jllv26sfz48r&01$s#g(*o!+c6=je-5_fze5)##&h)'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -84,7 +86,7 @@ ASGI_APPLICATION = "skillsahyog.asgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv("DATABASE_URL", "postgresql://postgres:xemWuhisfIUONrFjzWczHEdmRsUHmWom@caboose.proxy.rlwy.net:17455/railway"))
+    'default': dj_database_url.parse(os.getenv("DATABASE_URL"))
 }
 
 
@@ -121,8 +123,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -148,7 +150,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'skillsahyogofficial@gmail.com'
-EMAIL_HOST_PASSWORD = 'xudn uczg mjoq ckac' 
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD") 
 
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
@@ -156,7 +158,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],  # Redis is running locally on port 6379
+            "hosts": [("redis", 6379)],  # Redis is running locally on port 6379
         },
     },
 }

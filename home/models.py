@@ -205,3 +205,13 @@ class Feedback(models.Model):
         beta = 0.4   # Weight for rating
         self.skill_score = 100 * ((alpha * normalized_demand) + (beta * normalized_rating))
         return self.skill_score
+    
+class ContactMessage(models.Model):
+    username = models.CharField(max_length=150)
+    email = models.EmailField()
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.username}"

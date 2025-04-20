@@ -126,3 +126,78 @@ footer {
 #title-link:hover h1 {
     transform: scale(1.05); /* Slightly increase size on hover */
 }
+/* howitworks.css */
+
+#how-it-works {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+#how-it-works h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e88e5;
+}
+
+#how-it-works h3 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    color: #444;
+}
+
+#how-it-works h4 {
+    font-size: 1.1rem;
+    margin-top: 25px;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+#how-it-works p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #555;
+}
+
+#how-it-works a {
+    color: #1e88e5;
+    text-decoration: none;
+}
+
+#how-it-works a:hover {
+    text-decoration: underline;
+}
+
+/* FAQ spacing */
+#how-it-works .faq-section {
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 30px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    #how-it-works {
+        padding: 0 15px;
+    }
+
+    #how-it-works h2 {
+        font-size: 1.6rem;
+    }
+
+    #how-it-works h3 {
+        font-size: 1.3rem;
+    }
+
+    #how-it-works h4 {
+        font-size: 1rem;
+    }
+
+    #how-it-works p {
+        font-size: 0.95rem;
+    }
+}

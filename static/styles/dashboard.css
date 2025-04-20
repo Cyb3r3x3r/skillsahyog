@@ -271,3 +271,76 @@ nav ul li a {
         transform: rotate(360deg) translateX(2px) rotate(-360deg);
     }
 }
+/* Admin Contact Messages Section */
+.admin-contact-messages {
+    background: #fff;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Title */
+.admin-contact-messages h3 {
+    background: #497D74;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* Message List */
+.admin-contact-messages ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Individual Message Card */
+.admin-contact-messages li {
+    background: #f4f7fc;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-contact-messages li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Message Text Styles */
+.admin-contact-messages li strong {
+    font-size: 16px;
+    color: #2b2d42;
+}
+
+.admin-contact-messages li em {
+    font-size: 14px;
+    color: #555;
+}
+
+.admin-contact-messages li p {
+    margin: 8px 0;
+}
+
+/* Mark as Read Button */
+.admin-contact-messages button {
+    background: #497D74;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.admin-contact-messages button:hover {
+    background: #2b2d42;
+    transform: scale(1.05);
+}

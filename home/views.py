@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Skill,CustomUser,UserSkill,ExchangeRequest,PasswordResetOTP,SkillSahyogProfile,ChatAccess
-from .models import ChatRoom,Message,SkillRequest,Notification,Feedback
+from .models import ChatRoom,Message,SkillRequest,Notification,Feedback,ContactMessage
 from django.contrib.auth import login,authenticate,logout,update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -10,7 +10,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.timezone import now
 from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect,csrf_exempt
+from django.views.decorators.http import require_POST
 from django.db.models import Q,Avg,Count,F,Value
 from google.cloud import pubsub_v1
 import numpy as np
@@ -192,6 +193,11 @@ def dashboard(request):
         'sent_requests_count': sent_requests.count(),
         'suggested_skills': suggested_skills,
     }
+
+    # Add unread contact messages if superuser
+    if request.user.is_superuser:
+        context['unread_contact_messages'] = ContactMessage.objects.filter(is_read=False).order_by('-submitted_at')
+
     return render(request, 'dashboard.html', context)
 
 def user_logout(request):
@@ -256,7 +262,8 @@ def reject_exchange_request(request, request_id):
         
         publish_notification("exchange_rejected", request.user, exchange_request.sender)
 
-        return JsonResponse({"message": "Exchange request rejected."})
+        # Redirect to dashboard after rejection
+        return redirect('dashboard')
 
     return JsonResponse({"message": "Invalid request."}, status=400)
 
@@ -694,19 +701,16 @@ def view_feedbacks(request):
 
 @login_required
 def view_exchanges(request):
-    # Get all exchanges where the current user is either sender or receiver
     exchanges = ExchangeRequest.objects.filter(
         Q(sender=request.user) | Q(receiver=request.user)
     ).select_related('sender', 'receiver')
 
-    # Get all chatrooms where the current user was part of
-    chatrooms = ChatAccess.objects.filter(Q(user1=request.user) | Q(user2=request.user)).select_related('exchange')
+    # Attach ChatRoom and ChatAccess to each exchange
+    for exchange in exchanges:
+        exchange.attached_chatroom = ChatRoom.objects.filter(exchange=exchange).first()
+        exchange.chat_access = ChatAccess.objects.filter(exchange=exchange).first()
 
-    context = {
-        'exchanges': exchanges,
-        'chatrooms': chatrooms,
-    }
-    return render(request, 'my_exchanges.html', context)
+    return render(request, 'my_exchanges.html', {'exchanges': exchanges})
 
 @login_required
 def account_settings(request):
@@ -814,3 +818,37 @@ def match_skill(request):
     }
 
     return render(request, "match_skills.html", context)
+
+def privacy_policy(request):
+    return render(request,"privacy_policy.html")
+
+def terms_and_conditions(request):
+    return render(request,"terms.html")
+
+@csrf_exempt  # Optional: only if you're not including {% csrf_token %} in your form
+def submit_contact_form(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        if username and email and message:
+            ContactMessage.objects.create(username=username, email=email, message=message)
+        
+        return redirect('homepage')  # Make sure this name matches your url for index.html
+
+    return redirect('features')  # fallback
+
+@require_POST
+@login_required
+def mark_contact_message_read(request, message_id):
+    if not request.user.is_superuser:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    try:
+        msg = ContactMessage.objects.get(id=message_id, is_read=False)
+        msg.is_read = True
+        msg.save()
+        return JsonResponse({'success': True})
+    except ContactMessage.DoesNotExist:
+        return JsonResponse({'error': 'Message not found or already read'}, status=404)

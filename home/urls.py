@@ -33,4 +33,8 @@ urlpatterns = [
     path('account-settings/', views.account_settings, name='account_settings'),
     path('disable-account/', views.disable_account, name='disable_account'),
     path('match-skill/', views.match_skill, name='match_skill'),
+    path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
+    path('terms-conditions/', views.terms_and_conditions, name='terms'),
+    path('submit-contact/', views.submit_contact_form, name='submit_contact_form'),
+    path('contact/mark-read/<int:message_id>/', views.mark_contact_message_read, name='mark_contact_message_read'),
 ]
