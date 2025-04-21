@@ -1,0 +1,207 @@
+/* Import Google Font */
+body {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+}
+
+/* General Reset and Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: #EFE9D5; /* Off-white/cream */
+    color: #27445D; /* Dark blue */
+    flex: 1;
+    scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+/* Header Styling */
+header {
+    background-color: #497D74; /* Tealish green */
+    color: #EFE9D5; /* Off-white/cream text */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #EFE9D5; /* Off-white/cream text */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Form Container */
+.auth-container {
+    width: 35%; /* Slightly reduced */
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #27445D; /* Dark blue */
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.auth-container h2 {
+    font-size: 22px; /* Decreased */
+    margin-bottom: 15px;
+}
+
+/* Form Fields */
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-container label {
+    font-size: 14px; /* Decreased */
+    font-weight: 500;
+    text-align: left;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 8px; /* Reduced */
+    margin: 4px 0 12px 0;
+    border: none;
+    border-radius: 4px; /* Slightly reduced */
+    font-size: 14px; /* Decreased */
+}
+
+/* Button Styling */
+.auth-container button {
+    background-color: #71BBB2;
+    color: white;
+    font-size: 16px; /* Decreased */
+    font-weight: 600;
+    padding: 10px 18px; /* Reduced */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.auth-container button:hover {
+    background-color: #497D74;
+}
+
+/* Sign-up Link */
+.auth-container p {
+    margin-top: 12px;
+    font-size: 12px; /* Decreased */
+}
+
+.auth-container p a {
+    color: #71BBB2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-container p a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #27445D; /* Dark blue background */
+    color: #EFE9D5; /* Off-white/cream text */
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    bottom: 0;
+}
+/* Updated Footer Styling */
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.footer-links, .footer-social, .footer-address {
+    width: 30%;
+    text-align: left;
+}
+
+.footer-links h3, .footer-social h3, .footer-address h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer-links ul, .footer-social ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li, .footer-social ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a, .footer-social ul li a {
+    color: #EFE9D5;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-social ul li a i {
+    margin-right: 8px;
+}
+
+.footer-address p {
+    font-size: 16px;
+}
+
+/* Responsive Design for Footer */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-links, .footer-social, .footer-address {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+#title-link {
+    text-decoration: none; /* Remove underline from link */
+}
+
+#title-link h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #EFE9D5; /* Tealish green */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+#title-link:hover h1 {
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
