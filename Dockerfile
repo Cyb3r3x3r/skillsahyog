@@ -24,6 +24,9 @@ COPY . .
 # Copy Google Cloud credentials (make sure it's ignored in .gitignore)
 COPY config/directed-bongo-444307-p7-7dc58168bece.json /app/config/directed-bongo-444307-p7-7dc58168bece.json
 
+# Checking for files
+RUN echo "🔍 Checking templates directory:" && ls -R /app/templates
+
 # Copy supervisord config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
