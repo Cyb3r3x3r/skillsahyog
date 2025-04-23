@@ -882,3 +882,6 @@ def toggle_user_status(request, user_id):
     user.is_active = not user.is_active
     user.save()
     return redirect('manage_users')
+
+def about(request):
+    return render(request,'about.html')
