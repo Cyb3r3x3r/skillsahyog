@@ -39,4 +39,5 @@ urlpatterns = [
     path('contact/mark-read/<int:message_id>/', views.mark_contact_message_read, name='mark_contact_message_read'),
     path('mod/manage-users/', views.manage_users, name='manage_users'),
     path('mod/toggle-user-status/<int:user_id>/', views.toggle_user_status, name='toggle_user_status'),
+    path('about',views.about,name="about")
 ]
