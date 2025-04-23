@@ -1,3 +1,6 @@
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator
+from django.contrib.auth import get_user_model
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Skill,CustomUser,UserSkill,ExchangeRequest,PasswordResetOTP,SkillSahyogProfile,ChatAccess
 from .models import ChatRoom,Message,SkillRequest,Notification,Feedback,ContactMessage
@@ -19,6 +22,7 @@ from sklearn.preprocessing import MinMaxScaler
 from django.db.models.functions import Coalesce
 from itertools import chain
 
+User = get_user_model()
 
 PROJECT_ID = "directed-bongo-444307-p7"
 TOPIC_NAME = "exchange-notifications"
@@ -852,3 +856,29 @@ def mark_contact_message_read(request, message_id):
         return JsonResponse({'success': True})
     except ContactMessage.DoesNotExist:
         return JsonResponse({'error': 'Message not found or already read'}, status=404)
+    
+@staff_member_required
+def manage_users(request):
+    query = request.GET.get('q')
+    users = User.objects.all().order_by('-date_joined')
+
+    if query:
+        users = users.filter(
+            Q(username__icontains=query) |
+            Q(email__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        )
+
+    paginator = Paginator(users, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'manage_users.html', {'page_obj': page_obj})
+
+@staff_member_required
+def toggle_user_status(request, user_id):
+    user = User.objects.get(id=user_id)
+    user.is_active = not user.is_active
+    user.save()
+    return redirect('manage_users')
