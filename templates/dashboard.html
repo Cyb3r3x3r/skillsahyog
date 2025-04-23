@@ -54,6 +54,9 @@
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <ul>
+                {% if request.user.is_superuser %}
+                <li><a href="{% url 'manage_users' %}">Manage Users</a></li>
+                {% endif %}
                 <li><a href="{% url 'manage_skills' %}">Manage Skills</a></li>
                 <li><a href="{% url 'match_skill' %}">Skill Matching</a></li>
                 <li><a href="{% url 'my_feedbacks' %}">Your Feedbacks</a></li>
