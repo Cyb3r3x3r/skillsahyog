@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ request.user.first_name }}</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/manage_users.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/header.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/footer.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a id="title-link" href="{% url 'homepage' %}"><h1>Skill Sahyog</h1></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'profile_settings' %}">Settings</a></li>
+                <li><a href="#recent-noti" id="notification-icon">
+                    Notifications <span id="notif-dot" class="notification-dot"></span>
+                </a></li>
+                <li>
+                    <a href="{% url 'account_settings' %}">
+                        <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
+         {% elif request.user.sex == 'female' %}{{ MEDIA_URL }}avatars/female_default.png
+         {% else %}{{ MEDIA_URL }}avatars/gender_neutral.png{% endif %}" 
+                             alt="User Avatar" width="40" height="40" style="border-radius: 50%;">
+                    </a>
+                </li>
+                <li><a href="{% url 'user_logout' %}" class="cta-button">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block content %}
+<div class="manage-users-container">
+    <h2>Manage Users</h2>
+    <form method="get">
+        <input type="text" name="q" placeholder="Search users..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+    
+    <div class="user-table">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for user in page_obj %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.is_active|yesno:"Active,Disabled" }}</td>
+                <td>
+                    <form method="post" action="{% url 'toggle_user_status' user.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="status-btn {{ user.is_active|yesno:'disable,enable' }}">
+                            {{ user.is_active|yesno:"Disable,Enable" }}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No users found.</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skill Sahyog | All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>
