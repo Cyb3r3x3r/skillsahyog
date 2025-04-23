@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Features - Skill Sahyog</title>
+    <title>About Skill Sahyog</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static "styles/features.css" %}">
@@ -53,18 +53,18 @@
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms & Conditions</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms' %}">Terms & Conditions</a></li>
+                    <li><a href="{% url 'features' %}#contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-social">
                 <h3>Follow Us</h3>
                 <ul>
                     <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="https://x.com/SahyogSkil22799"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://www.instagram.com/skill_sahyog/"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="https://www.linkedin.com/in/shivamraj008/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
                 </ul>
             </div>
             <div class="footer-address">
