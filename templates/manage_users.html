@@ -20,9 +20,7 @@
         <nav>
             <ul>
                 <li><a href="{% url 'profile_settings' %}">Settings</a></li>
-                <li><a href="#recent-noti" id="notification-icon">
-                    Notifications <span id="notif-dot" class="notification-dot"></span>
-                </a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                 <li>
                     <a href="{% url 'account_settings' %}">
                         <img src="{% if request.user.sex == 'male' %}{{ MEDIA_URL }}avatars/male_default.png
