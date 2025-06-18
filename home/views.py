@@ -21,6 +21,7 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from django.db.models.functions import Coalesce
 from itertools import chain
+from django.db import connection
 
 User = get_user_model()
 
@@ -515,6 +516,15 @@ def send_message(request):
 
     return Response({"status": "Message sent", "message": serializer.data}, status=status.HTTP_201_CREATED)
 
+def reset_skill_id_sequence():
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT setval(
+                pg_get_serial_sequence('"home_skill"', 'id'),
+                (SELECT COALESCE(MAX(id), 1) FROM home_skill)
+            );
+        """)
+
 @login_required
 def manage_skills(request):
     user = request.user
@@ -538,6 +548,7 @@ def manage_skills(request):
                 return redirect("manage_skills")
 
         elif "approve_skill" in request.POST and user.is_superuser:
+            reset_skill_id_sequence()
             skill_request_id = request.POST.get("skill_request_id")
             skill_request = SkillRequest.objects.get(id=skill_request_id)
             Skill.objects.create(skill_name=skill_request.skill_name)  # Add skill to DB
